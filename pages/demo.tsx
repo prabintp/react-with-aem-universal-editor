@@ -92,13 +92,13 @@ console.log("content : ", JSON.stringify(content));
       data-aue-resource={`urn:aemconnection:${content?._path}/jcr:content/data/master`}
 
       >
-    
+  
       {componentFragmentReference && componentFragmentReference.map((component, index) => (
         <ImageWithCTA
           key={component.id || index}
           title={component.title}
           description1={component.description1?.plaintext ?? ''}
-          imageUrl= {`${process.env.NEXT_PUBLIC_AEM_ON_PREM_HOST}${component.componentImage.image._path}`}
+          imageUrl= {`${process.env.NEXT_PUBLIC_AEM_ON_PREM_HOST}${component.componentImage?.image?._path}`}
           imageAlt={component.componentImage?.imageAltText ?? ''}
           variation={index === 0 ? "background" : index % 2 === 0 ? 'left' : 'right'}
           cfPath={component._path}
