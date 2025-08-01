@@ -46,10 +46,10 @@ cfPath={cfPath}
       )}
 
       <div className="md:w-1/2 text-center md:text-left">
-        <h2 data-aue-prop="componentTitle" data-aue-type="text" className="text-4xl font-medium text-gray-900 mb-4">
+        <h2 data-aue-prop="title" data-aue-type="text" className="text-4xl font-medium text-gray-900 mb-4">
           {title}
         </h2>
-        <p className="text-gray-600 mb-6" data-aue-prop="componentDescription" data-aue-type="text" >
+        <p className="text-gray-600 mb-6" data-aue-prop="description1" data-aue-type="text" >
           {description1}
         </p>
        

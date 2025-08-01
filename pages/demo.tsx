@@ -1,6 +1,7 @@
-import ImageWithCTA from "@/components/image-with-cta";
+import ImageWithCTA from "@/components/image-with-cta-pro";
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import Head from "next/head";
 
 import {
   FaFacebookF,
@@ -69,6 +70,18 @@ const { pageTitle, pageDescription, componentFragmentReference } = content || {}
 
 console.log("content : ", JSON.stringify(content));
   return (
+    <>
+      <Head>
+            <script src="https://universal-editor-service.adobe.io/cors.js" async></script>
+            <meta name="urn:adobe:aue:system:aemconnection" content={`aem65:${process.env.NEXT_PUBLIC_AEM_ON_PREM_HOST_AUTHOR}`}></meta>
+             <meta
+          name="urn:adobe:aue:config:service"
+          content="https://author-diriyah-dev1.adobecqms.net/universal-editor"
+        />
+            
+            
+              </Head>
+    
     <div>
        <Header />
     <div
@@ -85,7 +98,7 @@ console.log("content : ", JSON.stringify(content));
           key={component.id || index}
           title={component.title}
           description1={component.description1?.plaintext ?? ''}
-          imageUrl= {`${process.env.AEM_ON_PREM_HOST}${component.componentImage.image._path}`}
+          imageUrl= {`${process.env.NEXT_PUBLIC_AEM_ON_PREM_HOST}${component.componentImage.image._path}`}
           imageAlt={component.componentImage?.imageAltText ?? ''}
           variation={index === 0 ? "background" : index % 2 === 0 ? 'left' : 'right'}
           cfPath={component._path}
@@ -122,20 +135,21 @@ console.log("content : ", JSON.stringify(content));
       copyright="© 2024 Diriyah, Inc. All rights reserved."
     />
     </div>
+    </>
   );
 }
 
 export async function getServerSideProps() {
-    console.log("host : " , process.env.AEM_ON_PREM_HOST);
-    console.log("endpoint : " , process.env.AEM_ON_PREM_GRAPHQL_ENDPOINT);
-    console.log("auth : " , process.env.AEM_ON_PREM_AUTH);
+    console.log("host : " , process.env.NEXT_PUBLIC_AEM_ON_PREM_HOST);
+    console.log("endpoint : " , process.env.NEXT_PUBLIC_AEM_ON_PREM_GRAPHQL_ENDPOINT);
+    console.log("auth : " , process.env.NEXT_PUBLIC_AEM_ON_PREM_AUTH);
 
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-  const res = await fetch(`${process.env.AEM_ON_PREM_HOST}${process.env.AEM_ON_PREM_GRAPHQL_ENDPOINT}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_AEM_ON_PREM_HOST}${process.env.NEXT_PUBLIC_AEM_ON_PREM_GRAPHQL_ENDPOINT}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      ...(process.env.AEM_ON_PREM_AUTH && { Authorization: process.env.AEM_ON_PREM_AUTH }), // Include Authorization only if defined
+      ...(process.env.NEXT_PUBLIC_AEM_ON_PREM_AUTH && { Authorization: process.env.NEXT_PUBLIC_AEM_ON_PREM_AUTH }), // Include Authorization only if defined
     }
   });
 
