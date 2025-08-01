@@ -1,6 +1,7 @@
 import ImageWithCTA from "@/components/image-with-cta";
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import Head from "next/head";
 
 import {
   FaFacebookF,
@@ -67,6 +68,14 @@ export default function Home({ content }: HomeProps) {
 
 const { title, descrpition, componentFragmentReference } = content || {};
   return (
+     <>
+      <Head>
+            <script src="https://universal-editor-service.adobe.io/cors.js" async></script>
+            <meta name="urn:adobe:aue:system:aemconnection" content={`aem:${process.env.NEXT_PUBLIC_AEM_HOST}`}></meta>
+            
+            
+            
+              </Head>
     <div>
        <Header />
     <div
@@ -120,16 +129,17 @@ const { title, descrpition, componentFragmentReference } = content || {};
       copyright="© 2024 Diriyah, Inc. All rights reserved."
     />
     </div>
+    </>
   );
 }
 
 export async function getServerSideProps() {
 
-  const res = await fetch(`${process.env.AEM_HOST}${process.env.AEM_GRAPHQL_HOME_ENDPOINT}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_AEM_HOST}${process.env.NEXT_PUBLIC_AEM_GRAPHQL_HOME_ENDPOINT}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      ...(process.env.AEM_AUTH && { Authorization: process.env.AEM_AUTH }), // Include Authorization only if defined
+      ...(process.env.NEXT_PUBLIC_AEM_AUTH && { Authorization: process.env.NEXT_PUBLIC_AEM_AUTH }), // Include Authorization only if defined
     }
   });
 
