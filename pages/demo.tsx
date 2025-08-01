@@ -59,13 +59,15 @@ interface HomeProps {
     pageTitle?: string;
     _path?: string
     pageDescription?: { plaintext: string };
-    componentReference?: any[];
+    componentFragmentReference?: any[];
   } | null;
 }
 
 export default function Home({ content }: HomeProps) {
 
-const { pageTitle, pageDescription, componentReference } = content || {};
+const { pageTitle, pageDescription, componentFragmentReference } = content || {};
+
+console.log("content : ", JSON.stringify(content));
   return (
     <div>
        <Header />
@@ -78,12 +80,12 @@ const { pageTitle, pageDescription, componentReference } = content || {};
 
       >
     
-      {componentReference && componentReference.map((component, index) => (
+      {componentFragmentReference && componentFragmentReference.map((component, index) => (
         <ImageWithCTA
           key={component.id || index}
-          title={component.componentTitle}
-          description1={component.componentDescription?.plaintext ?? ''}
-          imageUrl= {`${process.env.AEM_ON_PREM_HOST}${component.componentImage._path}`}
+          title={component.title}
+          description1={component.description1?.plaintext ?? ''}
+          imageUrl= {`${process.env.AEM_ON_PREM_HOST}${component.componentImage.image._path}`}
           imageAlt={component.componentImage?.imageAltText ?? ''}
           variation={index === 0 ? "background" : index % 2 === 0 ? 'left' : 'right'}
           cfPath={component._path}
@@ -147,7 +149,7 @@ export async function getServerSideProps() {
     };
   }
 
-  const content = json?.data?.diriyahPageContentFragmentByPath?.item || null;
+  const content = json?.data.diriyahPageContentFragmentModelByPath?.item || null;
 
   return {
     props: { content },
